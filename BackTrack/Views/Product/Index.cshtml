@@ -1,0 +1,185 @@
+﻿@using BackTrack.Models;
+@model Search
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    List<Product> productList = ViewBag.Product;
+}
+
+<div class="content-wrapper" style="background-color:white">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i>Product</a></li>
+            <li class="active">List</li>
+        </ol>
+    </section>
+    <br />
+    <!-- Main content -->
+    <section class="content">
+
+
+        <h4>
+            @Html.ActionLink("Create New", "Create")
+        </h4>
+        <hr />
+        <div class="row">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <div class="form-group col-md-3">
+                        @Html.LabelFor(model => model.CategoryId, "Category", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <select class="form-control" id="CategoryId" name="CategoryId">
+                                @{
+                                    List<Category> cat = new BackTrack.Models._ShowroomDB().Category.Where(c => c.CategoryId == null).ToList();
+                                    if (ViewBag.CategoryId > 0)
+                                    {
+
+                                        <option value="@ViewBag.CategoryId ">@ViewBag.CategoryName</option>
+                                        <option value="">All</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="">All</option>
+                                    }
+
+                                    foreach (var c in cat)
+                                    {
+
+                                        <optgroup label="@c.Name">
+                                            @if (c.Categories.Count() > 0)
+                                            {
+                                                foreach (var sc in c.Categories)
+                                                {
+                                                    <option value="@sc.Id">@sc.Name</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@c.Id">@c.Name</option>
+                                            }
+
+                                        </optgroup>
+                                    }
+
+                                }
+                            </select>
+                            @*@Html.DropDownList("CategoryId", null, "Select", htmlAttributes: new { @class = "form-control" })*@
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        @Html.LabelFor(model => model.BrandId, "Brand", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("BrandId", null, "All", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        @Html.LabelFor(model => model.SizeId, "Size", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("SizeId", null, "All", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        @Html.LabelFor(model => model.ColorId, "Color", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("ColorId", null, "All", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        @*@Html.ActionLink("Edit", "Index", new { category = CategoryId, })*@
+                        <input type="submit" value="Search" class="btn btn-success" />
+                    </div>
+                </div>
+            }
+        </div>
+        @if (productList != null && productList.Count > 0)
+        {
+            <table class="table table-responsive table-bordered" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>
+                            Brand
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Color
+                        </th>
+                        <th>
+                            Size
+                        </th>
+                        <th>
+                            Product
+                        </th>
+                        <th>
+                            Code
+                        </th>
+                        <th>
+                            BuyPrice
+                        </th>
+                        <th>
+                            Sell Price
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th>
+                            Warrenty
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in productList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Brand.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Category.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Color.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Size.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Code)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BuyPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SellPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Warrenty)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-xs btn-warning" })
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-xs btn-primary" })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are sure wants to delete (" + item.Name + ") ?');", @class = "btn btn-xs btn-danger", })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </section>
+</div>

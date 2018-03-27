@@ -1,0 +1,388 @@
+﻿@using BackTrack.Models;
+@model Cart
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+    List<Cart> list = ViewBag.CartList;
+}
+<div class="span9" style="width:1009px">
+    <div class="module span4">
+        <div class="module-head">
+            <center><h3>Sale</h3></center>
+        </div>
+        <div class="module-body">
+            <div class="chart inline-legend grid">
+                <div id="placeholder2" class="graph" style="height: 400px">
+                    @Html.AntiForgeryToken()
+                    @using (Html.BeginForm("Create", "Sale", FormMethod.Post))
+                    {
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ProductId, "Product Code", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control", id = "ProductCode" } })
+                                @*@Html.DropDownList("ProductId", null, "Select", htmlAttributes: new { @class = "form-control", id = "ProductId" })*@
+                                @Html.ValidationMessageFor(model => model.ProductCode,"", new { @class = "text-danger",style="color:red" })
+                            </div>
+                        </div>
+                        
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Quantity, "",new { @class = "text-danger", style = "color:red" })
+                                </div>
+                            </div>
+                     
+                        
+                        <div class="form-group">
+                            <a href="../Sale/Clear" class="btn pull-left">Clear</a>
+                            <input type="submit" value="Take It" class="btn btn-success pull-left" style="margin-left:105px" />
+                        </div><br /><br />
+                        <div style="font-size: small">
+                            <label id="lblcode1"></label>
+                            <b><label id="lblcode2"></label></b>
+                        </div>
+                        <div style="font-size: small">
+                            <div class="col-md-5">
+                                <label id="lblprice1"></label>
+                            </div>
+                            <div class="col-md-7">
+                                <label id="lblprice2"></label>
+                            </div>
+                        </div>
+                        <div style="font-size: small">
+                            <div class="col-md-5">
+                                <label id="lblquantity1"></label>
+                            </div>
+                            <div class="col-md-7">
+                                <label id="lblquantity2"></label>
+                            </div>
+                        </div>
+                        <div style="font-size: small">
+                            <div class="col-md-5">
+                                <label id="lblwarrenty1"></label>
+                            </div>
+                            <div class="col-md-7">
+                                <label id="lblwarrenty2"></label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="module span4" style="width:575px">
+        <div class="module-head">
+            <center><h3>Basket</h3></center>
+        </div>
+        <div class="module-body">
+
+            <div class="chart inline-legend grid">
+                @using (Html.BeginForm("SendAndPrint", "Sale", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <div class="col-md-12" style="margin-bottom: 10px">
+                            <div class="col-md-2">
+                                <label class="pull-left" style="margin-right: 5px">Cell No </label>
+                            </div>
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.CellNumber, new { htmlAttributes = new { @class = "form-control span3", @style = "float:left" } })
+                            </div>
+                            <div class="col-md-3">
+                                @if (Session["CartList"] != null && Session["CartList"].ToString() != "")
+                                {
+                                    <input type="submit" style="margin-left: 25px; float: left; font-size: 14px" value="Send & Print" class="btn btn-success btn-sm"/>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (list != null && list.Count > 0)
+                {
+                    <table class="table table-responsive">
+                        <tr>
+                            <th>
+                                Product Name
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Sub Total
+                            </th>
+                            @*<th>
+                                Warrenty
+                            </th>*@
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in list)
+                        {
+                            <tr>
+                                <td>
+                                    @item.ProductName
+                                </td>
+                                <td>
+                                    @item.Price
+                                </td>
+                                <td>
+                                    @item.Quantity
+                                </td>
+                                <td>
+                                    @item.SubTotal
+                                </td>
+                                @*<td>
+                                    @item.Warrenty
+                                </td>*@
+
+                                <td>
+                                    @Html.ActionLink("Delete", "ItemDelete", new { id = item.ProductId }, new { @class = "bt btn-danger btn-xs" })
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                    <div>
+                        <br/><b>Total:</b> (@ViewBag.Total)Tk <br /><br />
+                        @*@Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", placeholder = "Discount",style="width:70px" } })*@
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="form-horizontal" style="margin-top: 50px">
+    <div class="row">
+        <div class="col-md-5">
+            @Html.AntiForgeryToken()
+            @using (Html.BeginForm("Create", "Sale", FormMethod.Post))
+            {
+                <center><h3 style="letter-spacing: 5px">Sale</h3></center>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductId, "Product", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control", id = "ProductCode" } })
+                        @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div style="font-size: small">
+                    <div class="col-md-5">
+                        <label id="lblcode1"></label>
+                    </div>
+                    <div class="col-md-7">
+                        <label id="lblcode2"></label>
+                    </div>
+                </div>
+                <div style="font-size: small">
+                    <div class="col-md-5">
+                        <label id="lblprice1"></label>
+                    </div>
+                    <div class="col-md-7">
+                        <label id="lblprice2"></label>
+                    </div>
+                </div>
+                <div style="font-size: small">
+                    <div class="col-md-5">
+                        <label id="lblquantity1"></label>
+                    </div>
+                    <div class="col-md-7">
+                        <label id="lblquantity2"></label>
+                    </div>
+                </div>
+                <div style="font-size: small">
+                    <div class="col-md-5">
+                        <label id="lblwarrenty1"></label>
+                    </div>
+                    <div class="col-md-7">
+                        <label id="lblwarrenty2"></label>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Take It" class="btn btn-warning pull-right" />
+                        <a href="../Sale/Clear" class="btn btn-toolbar pull-right">Clear</a>
+                    </div>
+                </div>
+
+            }
+        </div>
+        <div class="v col-md-1"></div>
+        <div class="col-md-6 pull-right">
+            @using (Html.BeginForm("SendAndPrint", "Sale", FormMethod.Post))
+            {
+                <center><h3 style="letter-spacing: 5px">Basket</h3></center>
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <div class="col-md-2">
+                            <label class="pull-left" style="margin-right: 5px">Cell No </label>
+                        </div>
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.CellNumber, new { htmlAttributes = new { @class = "form-control", @style = "float:left" } })
+                        </div>
+                        <div class="col-md-3">
+                            <input type="submit" style="margin-left: 5px; float: left; font-size: 14px" value="Send & Print" class="btn btn-success btn-sm" />
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (list != null && list.Count > 0)
+            {
+                <table class="table table-responsive">
+                    <tr>
+                        <th>
+                            Product Name
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th>
+                            Sub Total
+                        </th>
+                        <th>
+                            Warrenty
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in list)
+                    {
+                        <tr>
+                            <td>
+                                @item.ProductName
+                            </td>
+                            <td>
+                                @item.Price
+                            </td>
+                            <td>
+                                @item.Quantity
+                            </td>
+                            <td>
+                                @item.SubTotal
+                            </td>
+                            <td>
+                                @item.Warrenty
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Delete", "ItemDelete", new { id = item.ProductId }, new { @class = "bt btn-danger btn-xs" })
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            ( @ViewBag.Total ) Tk
+                            <hr />
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control col-md-6", placeholder = "Discount" } })
+                        </td>
+                    </tr>
+
+                </table>
+
+            }
+        </div>
+
+    </div>
+</div>*@
+
+
+@section SaleCreateScript
+{
+    <script type="text/javascript">
+    var p;
+            $("#ProductCode").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: "/JS/GetProducts",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            code: request.term
+                        },
+                        success: function(data) {
+                            response($.map(data,
+                                function(item) {
+                                    p = item.Id;
+                                    $('#lblcode1').text('');
+                                    $('#lblcode2').text('');
+
+                                    $('#lblprice1').text('');
+                                    $('#lblprice2').text('');
+
+                                    $('#lblquantity1').text('');
+                                    $('#lblquantity2').text('');
+
+                                    $('#lblwarrenty1').text('');
+                                    $('#lblwarrenty2').text('');
+                                    return {
+                                        value: item.Code,
+                                    };
+
+
+                                }));
+
+                        },
+                        error: function() {
+                            alert('something went wrong !');
+                        }
+                    });
+                }
+            });
+
+
+            $("#ProductCode").change(function() {
+
+                var pid = p;
+                var json = { Id: pid };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetProductInfoById", "JS")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function(data) {
+                        $('#lblcode1').text('Product Code :');
+                        $('#lblcode2').text(data.Code);
+
+                        $('#lblprice1').text('Price :');
+                        $('#lblprice2').text(data.Price + ' ' + 'TK');
+
+                        $('#lblquantity1').text('Available Quantity:');
+                        $('#lblquantity2').text(data.Quantity);
+
+                        $('#lblwarrenty1').text('Warrenty :');
+                        $('#lblwarrenty2').text(data.Warrenty);
+                    }
+                });
+            });
+    </script>
+}
+

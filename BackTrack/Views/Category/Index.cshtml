@@ -1,0 +1,77 @@
+﻿@model IEnumerable<BackTrack.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper" style="background-color:white">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i>Initial Setup</a></li>
+            <li class="active">Category</li>
+        </ol>
+    </section>
+    <br />
+    <!-- Main content -->
+    <section class="content">
+
+        <hr />
+
+        <h4>
+            @Html.ActionLink("Create New", "Create")
+        </h4>
+        <table class="table table-responsive table-bordered" id="dataTable">
+            <thead>
+                <tr>
+                    <th>
+                        Category Name
+                    </th>
+                    <th>
+                        Parent Category
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @if (item.ParentCategory == null)
+                            {
+                                @Html.Raw("Empty")
+                            }
+                            else
+                            {
+                                @item.ParentCategory.Name
+                            }
+                        </td>
+                        <td>
+                            @if (string.IsNullOrEmpty(item.Description))
+                            {
+                                @Html.Raw("NA")
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.Description)
+                            }
+
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-xs btn-warning" })
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-xs btn-primary" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are sure wants to delete (" + item.Name + ") ?');", @class = "btn btn-xs btn-danger", })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+</div>

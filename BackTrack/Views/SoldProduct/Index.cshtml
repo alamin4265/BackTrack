@@ -1,0 +1,197 @@
+﻿@using BackTrack.Models;
+@model Search
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    List<Sale> productList = ViewBag.Product;
+}
+
+<div class="content-wrapper" style="background-color:white">
+    <section class="content-header">
+        <ol>
+            Today : @DateTime.UtcNow.ToShortDateString()
+        </ol>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i>Product</a></li>
+            <li class="active">Sold Products</li>
+        </ol>
+    </section>
+    <br />
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+                    <div class="form-group col-md-3">
+                        @Html.LabelFor(model => model.CategoryId, "Category", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <select class="form-control" id="CategoryId" name="CategoryId">
+                                @{
+                                    List<Category> cat = new BackTrack.Models._ShowroomDB().Category.Where(c => c.CategoryId == null).ToList();
+                                    if (ViewBag.CategoryId > 0)
+                                    {
+
+                                        <option value="@ViewBag.CategoryId ">@ViewBag.CategoryName</option>
+                                        <option value="">All</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="">All</option>
+                                    }
+
+                                    foreach (var c in cat)
+                                    {
+
+                                        <optgroup label="@c.Name">
+                                            @if (c.Categories.Count() > 0)
+                                            {
+                                                foreach (var sc in c.Categories)
+                                                {
+                                                    <option value="@sc.Id">@sc.Name</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@c.Id">@c.Name</option>
+                                            }
+
+                                        </optgroup>
+                                    }
+
+                                }
+                            </select>
+                            @*@Html.DropDownList("CategoryId", null, "Select", htmlAttributes: new { @class = "form-control" })*@
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        @Html.LabelFor(model => model.BrandId, "Brand", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("BrandId", null, "All", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        @Html.LabelFor(model => model.SizeId, "Size", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("SizeId", null, "All", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        @Html.LabelFor(model => model.ColorId, "Color", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("ColorId", null, "All", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        @*@Html.ActionLink("Edit", "Index", new { category = CategoryId, })*@
+                        <input type="submit" value="Search" class="btn btn-success" />
+                        <input id="sPrint" type="button" value="Print" class="btn btn-warning" />
+                    </div>
+                </div>
+            }
+        </div><br/>
+        @if (productList != null && productList.Count > 0)
+        {
+            Session["SoldPdf"] = productList;
+            double total = 0;
+            <table class="table table-responsive table-bordered" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>
+                            Brand
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Color
+                        </th>
+                        <th>
+                            Size
+                        </th>
+                        <th>
+                            Product
+                        </th>
+                        <th>
+                            Code
+                        </th>
+                        <th>
+                            BuyPrice
+                        </th>
+                        <th>
+                            Sell Price
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th>
+                            Warrenty
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in productList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Brand.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Category.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Color.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Size.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Code)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.BuyPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.SellPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Warrenty)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-xs btn-warning" })
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-xs btn-primary" })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are sure wants to delete (" + item.Product.Name + ") ?');", @class = "btn btn-xs btn-danger", })
+                            </td>
+                        </tr>
+                        double subTotal = item.Product.SellPrice * item.Quantity;
+                        total += subTotal;
+                    }
+                    
+                        <b>Total Sale : </b><label class="label label-success" style="font-size: 12px">@total  Tk</label>
+                </tbody>
+            </table>
+        }
+    </section>
+</div>
+
+@section SoldProductIndex{
+    <script type="text/javascript">
+    $("#sPrint").click(function(event){
+    event.preventDefault();
+    var url = '@Url.Action("PrintPdf", "SoldProduct")';
+            window.location.href = url;
+        });
+    </script>
+}

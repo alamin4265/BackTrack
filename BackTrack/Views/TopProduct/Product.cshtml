@@ -1,0 +1,177 @@
+﻿@using BackTrack.Models;
+@model Search
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    List<Group> list = ViewBag.TopProducts;
+    List<Group> list2 = ViewBag.TopProducts2;
+}
+<div class="content-wrapper" style="background-color:white">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i>Search and Report</a></li>
+            <li class="active">Top Product</li>
+        </ol>
+    </section>
+    <br />
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <label style="font-size: 13px" class="label label-primary">Top 10 Products</label>
+                </div><br />
+                @if (@ViewBag.TopProducts != null && @ViewBag.TopProducts.Count > 0)
+                {
+
+                    <table class="table table-responsive table-bordered" id="dataTableTop">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Code
+                                </th>
+                                <th>
+                                    Brand
+                                </th>
+                                <th>
+                                    Color
+                                </th>
+                                <th>
+                                    Size
+                                </th>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Quantity
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                BackTrack.Models._ShowroomDB db = new _ShowroomDB();
+                                Sale aSale = new Sale();
+                                foreach (var item in list)
+                                {
+                                    aSale = db.Sale.FirstOrDefault(t => t.ProductId == item.ProductId);
+
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => aSale.Product.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => aSale.Product.Code)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => aSale.Product.Brand.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => aSale.Product.Color.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => aSale.Product.Size.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => aSale.Product.SellPrice)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+            <div class="col-md-6">
+                <div>
+                @using (Html.BeginForm("Product", "TopProduct", FormMethod.Post))
+                {
+                    <label style="font-size: 13px" class="label label-warning">Worst Products</label>
+                    <label style="margin-left: 20px">Quantity < = </label>
+                    @Html.EditorFor(model=>model.Count)
+                    <input type="submit" id="show" value="Show" class="btn btn-success btn-xs"/>
+                }
+                </div><br />
+                @if (@ViewBag.TopProducts2 != null && @ViewBag.TopProducts2.Count > 0)
+                {
+                    
+
+                    <table class="table table-responsive table-bordered" id="dataTableTop">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Code
+                                </th>
+                                <th>
+                                    Brand
+                                </th>
+                                <th>
+                                    Color
+                                </th>
+                                <th>
+                                    Size
+                                </th>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Quantity
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                BackTrack.Models._ShowroomDB db = new _ShowroomDB();
+                                Sale aSale = new Sale();
+                                foreach (var item in list2)
+                                {
+                                    aSale = db.Sale.FirstOrDefault(t => t.ProductId == item.ProductId);
+
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => aSale.Product.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => aSale.Product.Code)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => aSale.Product.Brand.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => aSale.Product.Color.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => aSale.Product.Size.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => aSale.Product.SellPrice)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+
+
+    </section>
+</div>
+@section TopProduct{
+    <script type="text/javascript">
+
+    </script>
+}
+

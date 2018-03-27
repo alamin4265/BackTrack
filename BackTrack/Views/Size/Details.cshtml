@@ -1,0 +1,57 @@
+﻿@model BackTrack.Models.Size
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper" style="background-color:white">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i>Initial Setup</a></li>
+            <li class="active">Size</li>
+        </ol>
+    </section>
+    <br />
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Details of <b><i>( @Html.DisplayFor(model => model.Name) )</i></b></h4>
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-default btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { onclick = "return confirm('Are sure wants to delete (" + Model.Name + ") ?');", @class = "btn btn-xs btn-danger", })
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="breadcrumb-elements" style="float: right">
+                    <div class="heading-btn-group">
+                        <a href="../../Size/Index" class="btn btn-link btn-float has-text">
+                            <i class="glyphicon glyphicon-list"></i><br /><span>All Size</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Size
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+        </dl>
+    </section>
+</div>

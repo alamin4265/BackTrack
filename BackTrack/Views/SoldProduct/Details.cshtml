@@ -1,0 +1,79 @@
+﻿@model BackTrack.Models.Sale
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper" style="background-color:white">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i>Sold Product</a></li>
+            <li class="active">Details</li>
+        </ol>
+    </section>
+    <br />
+    <!-- Main content -->
+    <section class="content">
+        <div>
+                    <h4><a href="~/Product/Details/@Model.ProductId" class="btn btn-primary">@Model.Product.Name</a></h4>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Product Code
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Product.Code)
+                        </dd>
+
+                        <dt>
+                            Customer Cell No
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Voucher.CustomerCellNo)
+                        </dd>
+                        <dt>
+                            Voucher No
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Voucher.Id)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Quantity)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Quantity)
+                        </dd>
+
+                        <dt>
+                            Available Quantity
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Product.Quantity)
+                        </dd>
+                        <dt>
+                            Sold By
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Voucher.User.Name)
+                        </dd>
+                        <dt>
+                            Date
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.DateTime)
+                        </dd>
+
+                    </dl>
+                </div>
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                    @Html.ActionLink("Back to List", "Index")
+                </p>
+    </section>
+</div>

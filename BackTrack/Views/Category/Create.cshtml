@@ -1,0 +1,140 @@
+﻿@model BackTrack.Models.Category
+@using BackTrack.Models
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    List<Category> categoryList = ViewBag.TopCategoryList;
+}
+
+
+
+<div class="content-wrapper" style="background-color:white">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i>Initial Setup</a></li>
+            <li class="active">Category</li>
+        </ol>
+    </section>
+    <br />
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6">
+                <h5><b>Create Category</b></h5>
+            </div>
+            <div class="col-md-6">
+                <div class="breadcrumb-elements" style="float:right">
+                    <div class="heading-btn-group">
+                        <a href="../Category/Index" class="btn btn-link btn-float has-text">
+                            <i class="glyphicon glyphicon-list"></i><br /><span>All Category</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <!-- Up To -->
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success" id="msg">
+                <strong>Success!</strong> @TempData["message"].ToString()
+            </div>
+        }
+        
+        <div class="row">
+            <div class="col-md-6">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.CategoryId, "Category", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-8">
+                                @Html.DropDownList("CategoryId", null, "Select", htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-11">
+                                <input type="submit" value="Create" class="btn btn-sm btn-success" style="float: right" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+
+            <div class="col-md-6">
+                @if (categoryList.Count() >= 0)
+                {
+                    <table class="table table-responsive table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>
+                                Category Name
+                            </th>
+                            <th>
+                                Parent Category
+                            </th>
+                            <th style="text-align: center">
+                                Action
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in categoryList)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @if (item.ParentCategory == null)
+                                    {
+                                        @Html.Raw("Empty")
+                                    }
+                                    else
+                                    {
+                                        @item.ParentCategory.Name
+                                    }
+                                </td>
+                                <td style="text-align: center">
+                                    @Html.ActionLink("Details", "Details", new { id = @item.Id }, new { @class = "btn btn-xs btn-primary" })
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </section>
+</div>
+@*@section CategoryCreate{
+<script type="text/javascript">
+            var x =  @((TempData["message"] != null).ToString().ToLower());
+            if (x != null) {
+                $("#msg").fadeToggle(3000);
+            };
+</script>*@
+}

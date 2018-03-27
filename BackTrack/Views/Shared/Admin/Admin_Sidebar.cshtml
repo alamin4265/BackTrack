@@ -1,0 +1,76 @@
+﻿<aside class="main-sidebar">
+    <section class="sidebar">
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="~/Images/AdminImages/avatar04.png" class="img-circle" alt="." />
+            </div>
+            <div class="pull-left info">
+                @if (Session["User_Name"] != null && Session["User_Name"]?.ToString() != "")
+                {
+                    <p style="float: right">@Html.Raw(Session["User_Name"]?.ToString())</p>
+                }
+                <a href="#"><i class="fa fa-circle text-success"></i></a>
+            </div>
+        </div>
+        <br />
+        <ul class="sidebar-menu">
+            <li id="dashboard" runat="server">
+                <a href="~/Dashboard/Home">
+                    <i class="fa fa-dashboard"></i><span>Dashboard</span>
+                </a>
+            </li>
+            <li class="treeview" id="Product" runat="server">
+                <a href="#">
+                    <i class="fa fa-cogs"></i> <span>Initial Setup</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="~/Category/Create"><i class="fa fa-hand-o-right"></i>Category</a></li>
+                    <li><a href="~/Brand/Create"><i class="fa fa-hand-o-right"></i>Brand</a></li>
+                    <li><a href="~/Color/Create"><i class="fa fa-hand-o-right"></i>Color</a></li>
+                    <li><a href="~/Size/Create"><i class="fa fa-hand-o-right"></i>Size</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-life-ring"></i> <span>Product Control</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class=""><a href="~/Product/Create"><i class="fa fa-hand-o-right"></i>Product</a></li>
+                    <li><a href="~/SoldProduct/Index"><i class="fa fa-hand-o-right"></i>Sold Product</a></li>
+                    <li><a href="~/ReturnedProduct/Index"><i class="fa fa-hand-o-right"></i>Returned Product</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="~/User/Create">
+                    <i class="fa fa-users"></i><span>User</span>
+                </a>
+            </li>
+            <li id="faq" runat="server">
+                <a href="~/SearchAndReport/Index">
+                    <i class="fa fa-tree"></i><span>(Search & Report)</span>
+                </a>
+            </li>
+            <li id="faq" runat="server">
+                <a href="~/TopProduct/Product">
+                    <i class="fa fa-tree"></i><span>Top Products</span>
+                </a>
+            </li>
+            <br />
+            <br />
+            
+            @*<li id="message" runat="server">
+                <a href="#">
+                    <i class="fa fa-envelope-o"></i> <span>Message</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-cogs"></i> <span>Login Details</span> <small class="label pull-right bg-green">new</small>
+                </a>
+            </li>*@
+            <li><a href="~/Login/Logout"><i class="menu-icon icon-signout"></i>Logout </a></li>
+
+        </ul>
+    </section>
+</aside>
+

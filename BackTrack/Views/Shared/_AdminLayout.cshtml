@@ -1,0 +1,138 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Back Track Dashboard</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <link href="~/CustomDesign/AdminSite/AdminLTE.min.css" rel="stylesheet" />
+    <link href="~/CustomDesign/AdminSite/_all-skins.min.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+
+
+</head>
+@if (Session["Type"] == null || Session["Type"].ToString() == "")
+{
+
+    Response.Redirect("~/Login/Login");
+
+}
+else
+{
+    if (Session["Type"].ToString() != "Admin")
+    {
+        Response.Redirect("~/Login/Login");
+    }
+}
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+        @*// Admin Header //*@
+        @Html.Partial("~/Views/Shared/Admin/Admin_Header.cshtml")
+
+        @*// Admin SideBar //*@
+        @Html.Partial("~/Views/Shared/Admin/Admin_Sidebar.cshtml")
+
+        <!-- Content-->
+
+        @RenderBody()
+
+
+
+        @*// Admin Footer //*@
+        @Html.Partial("~/Views/Shared/Admin/Admin_Footer.cshtml")
+
+    </div>
+
+
+
+
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/CustomDesign/AdminSite/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="~/CustomDesign/AdminSite/fastclick/fastclick.min.js"></script>
+    <script src="~/CustomDesign/AdminSite/app.min.js"></script>
+    <script src="~/CustomDesign/AdminSite/demo.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>>
+    <script src="~/Scripts/DataTables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+
+
+    <script>
+
+        $(document).ready(function () {
+            var table = $('#dataTable').DataTable({
+                dom:
+                "<'row'<'col-sm-3'><'col-sm-6 text-center'><'col-sm-3'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+            });
+            var table = $('#dataTableS').DataTable({
+                dom:
+                "<'row'<'col-sm-2'f><'col-sm-6 text-center'><'col-sm-3'>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+            });
+        });
+
+    </script>
+    @RenderSection("Dashboard", false)
+
+    
+    <script type="text/javascript">
+        // Load google charts
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        // Draw the chart and set the chart values
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Work', 8],
+                ['Eat', 2],
+                ['TV', 4],
+                ['Gym', 2],
+                ['Sleep', 8]
+            ]);
+
+            // Optional; add a title and set the width and height of the chart
+            var options = { 'title': 'My Average Day', 'width': 550, 'height': 400 };
+
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        }
+    </script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    @RenderSection("SoldProductIndex", false)
+    @RenderSection("TopProduct", false)
+    @RenderSection("SearchAndReportIndex", false)
+@*@RenderSection("CategoryCreate", false)*@
+<script type="text/javascript">
+    var x =  @((TempData["message"] != null).ToString().ToLower());
+    if (x != null) {
+        $("#msg").fadeToggle(3000);
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+﻿@using BackTrack.Models;
+@model IEnumerable<BackTrack.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+    List<Product> productList = ViewBag.Product;
+}
+
+@if (productList != null && productList.Count > 0)
+{
+    <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display">
+        <thead>
+            <tr>
+                <th>
+                    Brand
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Color
+                </th>
+                <th>
+                    Size
+                </th>
+                <th>
+                    Product
+                </th>
+                <th>
+                    Code
+                </th>
+                <th>
+                    BuyPrice
+                </th>
+                <th>
+                    Sell Price
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Warrenty
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in productList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Size.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BuyPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SellPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Warrenty)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

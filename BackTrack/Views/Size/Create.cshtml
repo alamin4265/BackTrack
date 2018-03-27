@@ -1,0 +1,122 @@
+﻿@using BackTrack.Models
+@model BackTrack.Models.Size
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    List<Size> sizeList = ViewBag.TopSizeList;
+}
+
+<div class="content-wrapper" style="background-color:white">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i>Initial Setup</a></li>
+            <li class="active">Size</li>
+        </ol>
+    </section>
+    <br />
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6">
+                <h5><b>Create Size</b></h5>
+            </div>
+            <div class="col-md-6">
+                <div class="breadcrumb-elements" style="float:right">
+                    <div class="heading-btn-group">
+                        <a href="../Size/Index" class="btn btn-link btn-float has-text">
+                            <i class="glyphicon glyphicon-list"></i><br /><span>All Size</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <!-- Up To -->
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success" id="msg">
+                <strong>Success!</strong>@TempData["message"].ToString()
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-6">
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-success btn-sm pull-right" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <div class="col-md-6">
+                @if (sizeList.Count() >= 0)
+                {
+                    <table class="table table-responsive table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Color
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th style="text-align: center">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in sizeList)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>
+                                        @if (item.Description == null)
+                                        {
+                                            @Html.Raw("NA")
+                                        }
+                                        else
+                                        {
+                                            @item.Description
+                                        }
+                                    </td>
+                                    <td style="text-align: center">
+                                        @Html.ActionLink("Details", "Details", new { id = @item.Id }, new { @class = "btn btn-xs btn-primary" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+
+        </div>
+    </section>
+</div>

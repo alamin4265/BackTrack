@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BackTrack.Models.Voucher>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+<div class="span9" style="width:1009px">
+    <div class="module">
+        <div class="module-head">
+            <h3>Product Return</h3>
+        </div>
+        <div class="module-body">
+            <div class="chart inline-legend grid">
+                <div id="placeholder2" style="min-height:400px">
+                    <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Voucher No
+                                </th>
+                                <th>
+                                    Customer Cell No
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Discount)
+                                </th>
+                                <th>
+                                    Vouchered By
+                                </th>
+                                <th>
+                                    Date
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CustomerCellNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Discount)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.User.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateTime)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

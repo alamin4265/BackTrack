@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BackTrack</title>
+    <link href="~/CustomDesign/ClientSite/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/CustomDesign/ClientSite/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="~/CustomDesign/ClientSite/theme.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <link href="~/CustomDesign/jquery-ui.min.css" rel="stylesheet" />
+
+</head>
+@if (Session["Type"] == null || Session["Type"].ToString() == "")
+{
+    Response.Redirect("~/Login/Login");
+}
+<body>
+    @Html.Partial("~/Views/Shared/Client/Client_Header.cshtml")
+    <!-- /navbar -->
+    <div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                @Html.Partial("~/Views/Shared/Client/Client_Sidebar.cshtml")
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @Html.Partial("~/Views/Shared/Client/Client_Footer.cshtml")
+
+    <script src="~/CustomDesign/ClientSite/jquery-1.9.1.min.js"></script>
+    <script src="~/CustomDesign/jquery-ui.min.js"></script>
+    <script src="~/CustomDesign/ClientSite/bootstrap.min.js"></script>
+    <script src="~/CustomDesign/jquery.dataTables.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    @RenderSection("SaleCreateScript", false)
+</body>
+</html>

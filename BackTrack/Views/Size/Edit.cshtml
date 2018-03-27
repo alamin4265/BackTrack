@@ -1,0 +1,72 @@
+﻿@model BackTrack.Models.Size
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper" style="background-color: white">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i>Initial Setup</a></li>
+            <li class="active">Size</li>
+        </ol>
+    </section>
+    <br />
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6">
+                <h5><b>Edit Size</b></h5>
+            </div>
+            <div class="col-md-6">
+                <div class="breadcrumb-elements" style="float: right">
+                    <div class="heading-btn-group">
+                        <a href="~/Size/Index" class="btn btn-link btn-float has-text">
+                            <i class="glyphicon glyphicon-list"></i><br /><span>All Size</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success" id="msg">
+                <strong>Update!</strong>@TempData["message"].ToString()
+            </div>
+        }
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-9">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    </section>
+</div>

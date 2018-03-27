@@ -1,0 +1,146 @@
+﻿@model BackTrack.Models.User
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper" style="background-color:white">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i>User</a></li>
+            <li class="active">Details</li>
+        </ol>
+    </section>
+    <br />
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Details of <b><i>( @Html.DisplayFor(model => model.Name) )</i></b></h4>
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-default btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { onclick = "return confirm('Are sure wants to delete (" + Model.Name + ") ?');", @class = "btn btn-xs btn-danger", })
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="breadcrumb-elements" style="float: right">
+                    <div class="heading-btn-group">
+                        <a href="../../Product/Index" class="btn btn-link btn-float has-text">
+                            <i class="glyphicon glyphicon-list"></i><br /><span>All User</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    User Type
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserType.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Contact)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Contact)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Password)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Password)
+                </dd>
+
+                <dt>
+                    Gender
+                </dt>
+
+                <dd>
+                    @if (Model.Gender == 1)
+                    {
+                        @Html.Raw("Male")
+                    }
+                    else
+                    {
+                        @Html.Raw("Female")
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.JoinDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.JoinDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Ip)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Ip)
+                </dd>
+
+                <dt>
+                    Date Of Birth
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DOB)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+
+                <dt>
+                    NID No
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NID)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Image)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Image)
+                </dd>
+
+            </dl>
+        </div>
+    </section>
+</div>
+

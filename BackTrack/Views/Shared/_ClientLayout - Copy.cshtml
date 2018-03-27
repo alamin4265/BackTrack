@@ -1,0 +1,113 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BackTrack</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <style type="text/css">
+        .v {
+            margin-top: 90px;
+            position: absolute;
+            left: 50%;
+            top: 10%;
+            bottom: 10%;
+            border-right: 2px solid black;
+        }
+    </style>
+
+</head>
+@if (Session["Type"] == null || Session["Type"].ToString() == "")
+{
+    Response.Redirect("~/Login/Login");
+}
+<body>
+
+    <div>
+        @if (Session["User_Name"] != null && Session["User_Name"]?.ToString() != "")
+        {
+            using (Html.BeginForm("Logout", "Login", FormMethod.Post))
+            {
+                <input type="submit" value="Logout" id="Logout" class="btn btn-dark" style="float: right; margin-top: 40px; margin-right: 10px" />
+            }
+            <h4 style="float: right">@Html.Raw(Session["User_Name"]?.ToString())</h4>
+        }
+
+        <h3>BackTrack </h3>
+
+    </div>
+    <div>
+        <div style="padding: 1px">
+            <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display: block; width: 15%" id="mySidebar">
+                <button class="w3-bar-item w3-button" style="color: whitesmoke; background-color: darkolivegreen"
+                        onclick="w3_close()">
+                    Close &times;
+                </button>
+                <hr />
+                <a href="../Sale/Create" class="w3-bar-item w3-button" style="background: gainsboro">Sale</a>
+                <hr />
+                <a href="../Return/Create" class="w3-bar-item w3-button" style="background: gainsboro">Return</a>
+                <hr />
+                <a href="../Voucher/Index" class="w3-bar-item w3-button" style="background: gainsboro">Voucher</a>
+                <hr />
+                <a href="../ProductList/Index" class="w3-bar-item w3-button" style="background: gainsboro">Product</a>
+
+            </div>
+
+            <div id="main" style="margin-left: 15%">
+                <button id="openNav" class="w3-button w3-teal w3-button" onclick="w3_open()" style="display: none">&#9776;</button>
+                @*<img src="img_car.jpg" alt="Car" style="width:100%">*@
+
+                <div class="w3-container">
+
+                    @RenderBody()
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script src="~/CustomDesign/jquery-ui.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>>
+    <script src="~/Scripts/DataTables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+    function w3_open() {
+        document.getElementById("main").style.marginLeft = "15%";
+        document.getElementById("mySidebar").style.width = "15%";
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("openNav").style.display = 'none';
+    }
+
+    function w3_close() {
+        document.getElementById("main").style.marginLeft = "0%";
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("openNav").style.display = "inline-block";
+    }
+
+    $(document).ready(function () {
+            var table = $('#dataTable').DataTable({
+                dom:
+                "<'row'<'col-sm-3'f><'col-sm-6 text-center'><'col-sm-3'>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+            });           
+
+        });
+    </script>
+</body>
+</html>

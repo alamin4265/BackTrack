@@ -1,0 +1,98 @@
+﻿@using BackTrack.Models;
+@model IEnumerable<Return>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="content-wrapper" style="background-color:white">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i>Product</a></li>
+            <li class="active">Returned Products</li>
+        </ol>
+    </section>
+    <br />
+    <!-- Main content -->
+    <section class="content">
+
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-responsive table-bordered" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>
+                            Brand
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Color
+                        </th>
+                        <th>
+                            Size
+                        </th>
+                        <th>
+                            Product
+                        </th>
+                        <th>
+                            Code
+                        </th>
+                        <th>
+                            BuyPrice
+                        </th>
+                        <th>
+                            Sell Price
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th>
+                            Warrenty
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Brand.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Category.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Color.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Size.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Code)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.BuyPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.SellPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Warrenty)
+                            </td>                            
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </section>
+</div>
+

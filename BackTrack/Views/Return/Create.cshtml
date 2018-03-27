@@ -1,0 +1,113 @@
+﻿@using BackTrack.Models
+@model Return
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+    List<Sale> slist = ViewBag.SellList;
+}
+<div class="span9" style="width:1009px">
+    <div class="module">
+        <div class="module-head">
+            <h3>Product Return</h3>
+        </div>
+        <div class="module-body">
+            <div class="chart inline-legend grid">
+                <div id="placeholder2" style="min-height:400px">
+
+                    <div class="col-md-6 span4">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @using (Html.BeginForm("GetAllSaleByVoucherId", "Return", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.VoucherId, "Voucher", htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.VoucherId, new { htmlAttributes = new { @class = "form-control" } })<br />
+                                    @Html.ValidationMessageFor(model => model.VoucherId, "", new { @class = "text-danger", style = "color:red" })
+
+                                </div>
+                                <div class="col-md-offset-10 col-md-2" style="margin-top: 5px">
+                                    <input type="submit" value="Check" style="margin-left:165px" class="btn btn-warning btn-sm" />
+                                </div>
+                            </div>
+                        }
+                        @using (Html.BeginForm("Create", "Return", FormMethod.Post))
+                        {@Html.AntiForgeryToken()
+                        @Html.EditorFor(model => model.VoucherId, new { htmlAttributes = new { @class = "form-control", @style = "display: none;" } })
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CustomerCellNo, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.CustomerCellNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CustomerCellNo, "", new { @class = "text-danger", style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ProductCode, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "text-danger", style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger", style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-10 col-md-2">
+                                <input type="submit" value="Return" class="btn btn-default" />
+                            </div>
+                        </div>
+                    }
+
+                    </div>
+
+                    <div class="col-md-6 span4">
+
+                        <h5>
+                            Checking Voucher No:
+                            @if (@ViewBag.v != null && ViewBag.v.ToString() != "")
+                            {
+                                @Html.Raw(@ViewBag.v.ToString())
+                            }
+                        </h5>
+                        <hr />
+                        @if (slist != null && slist.Count>0)
+                        {
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Code</th>
+                                        <th>Quantity</th>
+                                        <th>Warrenty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var sale in slist)
+                                    {
+                                        <tr>
+                                            <td>@Html.Raw(sale.Product.Name)</td>
+                                            <td>@Html.Raw(sale.Product.Code)</td>
+                                            <td>@Html.Raw(sale.Quantity)</td>
+                                            <td> @Html.Raw(sale.Product.Warrenty)</td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
